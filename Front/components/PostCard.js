@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 
 import CommentForm from './CommentForm';
 import PostImages from './PostImages';
+import PostCardContent from './PostCardContent';
 
 const PostCard = ({ post }) => {
   const id = useSelector((state) => state.user.me?.id);
@@ -61,7 +62,7 @@ const PostCard = ({ post }) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.name}
-          description={post.content}
+          description={<PostCardContent postData={post.content} />}
         ></Card.Meta>
       </Card>
       {commentFormOpened && (
