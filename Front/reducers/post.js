@@ -9,12 +9,17 @@ const initialState = {
       content: '첫 번째 게시글 #해시태그 #익스프레스',
       Images: [
         {
-          src: '',
+          src:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/VanGogh_1887_Selbstbildnis.jpg/230px-VanGogh_1887_Selbstbildnis.jpg',
         },
         {
-          src: '',
+          src:
+            'https://zsuttonphoto.com/wp-content/uploads/2020/05/Los-Angeles-Beauty-Photography-2020.jpg',
         },
-        { src: '' },
+        {
+          src:
+            'https://zsuttonphoto.com/wp-content/uploads/2020/05/Los-Angeles-Beauty-Photography-2020.jpg',
+        },
       ],
       Comments: [
         {

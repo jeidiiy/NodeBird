@@ -26,7 +26,7 @@ const PostCard = ({ post }) => {
   return (
     <div>
       <Card
-        cover={post.Images[0] && <PostImages images={post.images} />}
+        cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" />,
           liked ? (
@@ -83,9 +83,6 @@ const PostCard = ({ post }) => {
           ></List>
         </div>
       )}
-
-      {/* <CommentForm />
-      <Comments /> */}
     </div>
   );
 };
