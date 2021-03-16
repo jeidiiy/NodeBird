@@ -36,7 +36,7 @@ export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
-const dummyUser = data => ({
+const dummyUser = (data) => ({
   ...data,
   nickname: 'wscrg',
   id: 1,
@@ -45,18 +45,14 @@ const dummyUser = data => ({
   Followers: [],
 });
 
-export const loginRequestAction = data => {
-  return {
-    type: LOG_IN_REQUEST,
-    data,
-  };
-};
+export const loginRequestAction = (data) => ({
+  type: LOG_IN_REQUEST,
+  data,
+});
 
-export const logoutRequestAction = () => {
-  return {
-    type: LOG_OUT_REQUEST,
-  };
-};
+export const logoutRequestAction = () => ({
+  type: LOG_OUT_REQUEST,
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

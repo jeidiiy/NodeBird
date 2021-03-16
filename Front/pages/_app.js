@@ -1,14 +1,12 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import 'antd/dist/antd.css';
-import wrapper from '../store/configureStore';
 import withReduxSaga from 'next-redux-saga';
+import wrapper from '../store/configureStore';
 
-const NodeBird = ({ Component }) => {
-  return <Component />;
-};
+const NodeBird = ({ Component }) => <Component />;
 
-NodeBird.proptypes = {
+NodeBird.propTypes = {
   Component: Proptypes.elementType.isRequired,
 };
 

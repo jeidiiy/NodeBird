@@ -21,7 +21,7 @@ const PostCard = ({ post }) => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const onToggleComment = useCallback(
     () => setCommentFormOpened((prev) => !prev),
-    []
+    [],
   );
 
   return (
@@ -42,7 +42,7 @@ const PostCard = ({ post }) => {
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
             key="more"
-            content={
+            content={(
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
@@ -53,7 +53,7 @@ const PostCard = ({ post }) => {
                   <Button>신고</Button>
                 )}
               </Button.Group>
-            }
+            )}
           >
             <EllipsisOutlined />
           </Popover>,
@@ -63,7 +63,7 @@ const PostCard = ({ post }) => {
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.name}
           description={<PostCardContent postData={post.content} />}
-        ></Card.Meta>
+        />
       </Card>
       {commentFormOpened && (
         <div>
@@ -81,7 +81,7 @@ const PostCard = ({ post }) => {
                 />
               </li>
             )}
-          ></List>
+          />
         </div>
       )}
     </div>

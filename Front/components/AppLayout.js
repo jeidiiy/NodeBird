@@ -13,22 +13,22 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const Global = createGlobalStyle`
-	.ant-row {
-		margin-right: 0 !important;
-		margin-left: 0 !important;
-	}
+.ant-row {
+margin-right: 0 !important;
+margin-left: 0 !important;
+}
 
-	.ant-col:first-child {
-		padding-left: 0 !important;
-	}
+.ant-col:first-child {
+padding-left: 0 !important;
+}
 
-	.ant-col:last-child {
-		padding-right: 0 !important;
-	}
+.ant-col:last-child {
+padding-right: 0 !important;
+}
 `;
 
 const AppLayout = ({ children }) => {
-  const logInDone = useSelector(state => state.user.logInDone);
+  const { me } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -55,7 +55,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {logInDone ? <UserProfile /> : <LoginForm />}
+          {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
@@ -74,7 +74,7 @@ const AppLayout = ({ children }) => {
   );
 };
 
-AppLayout.proptypes = {
+AppLayout.propTypes = {
   children: Proptypes.node.isRequired,
 };
 
