@@ -1,6 +1,12 @@
 import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
 import axios from 'axios';
 import {
+  FOLLOW_REQUEST,
+  FOLLOW_SUCCESS,
+  FOLLOW_FAILURE,
+  UNFOLLOW_REQUEST,
+  UNFOLLOW_SUCCESS,
+  UNFOLLOW_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -89,6 +95,44 @@ function* changeNickname(action) {
   }
 }
 
+function followAPI() {
+  return axios.post('/api/signUp');
+}
+
+function* follow(action) {
+  try {
+    // const result = yield call(signUpAPI);
+    yield put({
+      type: FOLLOW_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    yield put({
+      type: FOLLOW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function unfollowAPI() {
+  return axios.post('/api/signUp');
+}
+
+function* unfollow(action) {
+  try {
+    // const result = yield call(signUpAPI);
+    yield put({
+      type: UNFOLLOW_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    yield put({
+      type: UNFOLLOW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -105,6 +149,21 @@ function* watchChangeNickname() {
   yield takeLatest(CHANGE_NICKNAME_REQUEST, changeNickname);
 }
 
+function* watchFollow() {
+  yield takeLatest(FOLLOW_REQUEST, follow);
+}
+
+function* watchUnfollow() {
+  yield takeLatest(UNFOLLOW_REQUEST, unfollow);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp), fork(watchChangeNickname)]);
+  yield all([
+    fork(watchLogIn),
+    fork(watchLogOut),
+    fork(watchSignUp),
+    fork(watchChangeNickname),
+    fork(watchFollow),
+    fork(watchUnfollow),
+  ]);
 }
