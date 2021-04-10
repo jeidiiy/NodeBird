@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,7 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { signUpLoading } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone } = useSelector(state => state.user);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -21,7 +22,7 @@ const Signup = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const onChangePasswordCheck = useCallback(
-    (e) => {
+    e => {
       setPasswordCheck(e.target.value);
       setPasswordError(e.target.value !== password);
     },
@@ -30,10 +31,16 @@ const Signup = () => {
 
   const [term, setTerm] = useState('');
   const [termError, setTermError] = useState(false);
-  const onChangeTerm = useCallback((e) => {
+  const onChangeTerm = useCallback(e => {
     setTerm(e.target.checked);
     setTermError(false);
   }, []);
+
+  useEffect(() => {
+    if (signUpDone) {
+      Router.push('/');
+    }
+  }, [signUpDone]);
 
   const onSubmit = useCallback(() => {
     if (password !== passwordCheck) {
