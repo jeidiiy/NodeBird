@@ -1,4 +1,4 @@
-const paasport = require('paasport');
+const passport = require('paasport');
 const local = require('./local');
 
 module.exports = () => {
