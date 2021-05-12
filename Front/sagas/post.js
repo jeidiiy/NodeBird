@@ -1,6 +1,13 @@
-import { all, fork, put, takeLatest, delay, throttle } from 'redux-saga/effects';
+import {
+  all,
+  fork,
+  put,
+  takeLatest,
+  delay,
+  throttle,
+  call,
+} from 'redux-saga/effects';
 import axios from 'axios';
-import shortId from 'shortid';
 import {
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
@@ -14,28 +21,28 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_FAILURE,
   LOAD_POSTS_SUCCESS,
-  generateDummyPost } from '../reducers/post';
+  generateDummyPost,
+} from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 function addPostAPI(data) {
-  return axios.post('/api/post', data);
+  return axios.post('/post', { content: data });
 }
 
 function* addPost(action) {
   try {
-    // const result = yield call(addPostAPI, action.data);
-    yield delay(1000);
-    const id = shortId.generate();
+    const result = yield call(addPostAPI, action.data);
+    console.log(result);
     yield put({
       type: ADD_POST_SUCCESS,
       data: {
         id,
-        content: action.data,
+        content: result.data,
       },
     });
     yield put({
       type: ADD_POST_TO_ME,
-      data: id,
+      data: result.data.id,
     });
   } catch (err) {
     yield put({
@@ -46,7 +53,22 @@ function* addPost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post(`/api/post/${data.postId}/comment`, data);
+  return axios.post(`/post/${data.postId}/comment`, data);
+}
+
+function* addComment(action) {
+  try {
+    const result = yield call(addCommentAPI, action.data);
+    yield put({
+      type: ADD_COMMENT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: ADD_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
 }
 
 function loadPostsAPI(data) {
@@ -85,22 +107,6 @@ function* removePost(action) {
   } catch (err) {
     yield put({
       type: REMOVE_POST_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-
-function* addComment(action) {
-  try {
-    // const result = yield call(addCommentAPI, action.data);
-    yield delay(1000);
-    yield put({
-      type: ADD_COMMENT_SUCCESS,
-      data: action.data,
-    });
-  } catch (err) {
-    yield put({
-      type: ADD_COMMENT_FAILURE,
       error: err.response.data,
     });
   }
