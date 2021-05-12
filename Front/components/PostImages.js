@@ -79,6 +79,10 @@ const PostImages = ({ images }) => {
   );
 };
 
+PostImages.defaultProps = {
+  images: null,
+};
+
 PostImages.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object),
 };
