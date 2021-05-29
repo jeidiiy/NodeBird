@@ -10,6 +10,7 @@ const userRouter = require('./routes/user');
 const db = require('./models');
 const passportConfig = require('./passport');
 const morgan = require('morgan');
+const path = require('path');
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ db.sequelize
   .then(() => {
     console.log('db 연결 성공');
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
   });
 passportConfig();
@@ -32,6 +33,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
